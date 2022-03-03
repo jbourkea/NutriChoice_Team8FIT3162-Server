@@ -3,6 +3,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './db/connect.js'
 dotenv.config();
+//Middleware
+import NotFoundMiddleware from './middleware/NotFound.js';
+import ErrorHandlerMiddleware from './middleware/ErrorHandler.js'
 
 // Server initialization
 const app = express();
@@ -16,7 +19,8 @@ app.get('/', (req, res) => {
 })
 
 // Middleware
-// TODO: Implement Middleware
+app.use(NotFoundMiddleware);
+app.use(ErrorHandlerMiddleware);
 
 const startServer = async () => {
     try {

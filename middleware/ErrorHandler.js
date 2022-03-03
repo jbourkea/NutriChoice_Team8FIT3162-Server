@@ -3,3 +3,5 @@ const ErrorHandlerMiddleware = (err, req, res, next) => {
     //TODO: Implement propper error handing proceedure (logged to console for debugging)
     console.log(err)
 }
+
+export default ErrorHandlerMiddleware;
