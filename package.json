@@ -1,0 +1,27 @@
+{
+  "name": "nutrichoice_team8fit3162-server",
+  "version": "1.0.0",
+  "description": "The server for the NutriChoice iOS application. Team 8 Sem 1 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type" : "module"
+  ,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbourkea/NutriChoice_Team8FIT3162-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbourkea/NutriChoice_Team8FIT3162-Server/issues"
+  },
+  "homepage": "https://github.com/jbourkea/NutriChoice_Team8FIT3162-Server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.4"
+  }
+}
