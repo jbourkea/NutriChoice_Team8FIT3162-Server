@@ -14,7 +14,7 @@ const ProductSchema = new mongoose.Schema({
         type:String,
         required:[true, "Please provide a name for the product"],
         minlength:5,
-        maxlength:20,
+        maxlength:35,
         default:'Undefined Product',
     },
     // TODO: Include image of product
@@ -69,4 +69,4 @@ const ProductSchema = new mongoose.Schema({
     // TODO: Add additional non-required macros    
 })
 
-export default mongoose.model('product', UserSchema);
+export default mongoose.model('product', ProductSchema);

@@ -7,17 +7,16 @@ dotenv.config();
 //Middleware
 import NotFoundMiddleware from './middleware/NotFound.js';
 import ErrorHandlerMiddleware from './middleware/ErrorHandler.js'
+// Routers
+import productRouter from './routes/productRoutes.js';
 
 // Server initialization
 const app = express();
 const port = process.env.PORT || 8008;
 app.use(express.json());
 
-// Routes
-// TODO: Implement Routes
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-})
+// Routers
+app.use('/api/v1/products', productRouter);
 
 // Middleware
 app.use(NotFoundMiddleware);

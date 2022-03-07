@@ -4,3 +4,5 @@ class BadRequestError extends Error {
         this.statusCode = 400;
     }
 }
+
+export default BadRequestError

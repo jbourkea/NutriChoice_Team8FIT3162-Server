@@ -1,4 +1,6 @@
 import Product from "../models/Product.js";
+import {BadRequestError, ConflictError, NotFoundError} from '../errors/index.js'
+import mongoose from "mongoose";
 
 /*
 createProduct
@@ -26,6 +28,7 @@ const createProduct = async (req, res) => {
 
     // Create the product
     const newProduct = await Product.create({
+        _id : new mongoose.Types.ObjectId(),
         product_barcode : barcode,
         product_name : name,
         product_category : category,
@@ -33,7 +36,7 @@ const createProduct = async (req, res) => {
         product_weight : weight,
         energykj_100g : energy,
         protein_100g : protein,
-        carbohydrate_100g : carbohydrate,
+        carbohydrates_100g : carbohydrate,
         sugars_100g : sugar,
         fat_100g : fat,
         saturatedfat_100g : saturatedfat,
@@ -46,7 +49,23 @@ const createProduct = async (req, res) => {
 
 const deleteProduct = async (req, res, next) => {res.send("Delete Product")}
 
-const getSingleProduct = async (req, res, next) => {res.send("Get Single Product")}
+/*
+getSingleProduct
+API Controller for retrieving single product from database by barcode
+Input :
+    :barcode - Route parameter
+
+Returns the target product
+
+*/
+const getSingleProduct = async (req, res, next) => {
+    const target = req.params.barcode;
+    const product = await Product.findOne({product_barcode : String(target)}).exec();
+    if(!product){
+        throw new NotFoundError("This product does not exist");
+    }
+    return res.status(200).json(product);
+}
 
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
 
