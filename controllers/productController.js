@@ -47,7 +47,27 @@ const createProduct = async (req, res) => {
 
 }
 
-const deleteProduct = async (req, res, next) => {res.send("Delete Product")}
+/*
+getSingleProduct
+API Controller for deleting single product from database by barcode
+Input :
+    :barcode - Route parameter
+
+Returns the deleted product
+
+*/
+const deleteProduct = async (req, res) => {
+    // Delete object if found by barcode
+    // TODO: Ensure only admin or user who created product can delete (Permissions)
+    const target = req.params.barcode;
+    const product = Product.findOneAndDelete({product_barcode : target}, (err, product) => {
+        if(err){
+            throw new ConflictError("This product could not be deleted")
+        } else {
+            return res.status(200).json(product);
+        }
+    })
+}
 
 /*
 getSingleProduct
