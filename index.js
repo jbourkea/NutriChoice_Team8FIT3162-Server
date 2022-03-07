@@ -2,6 +2,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './db/connect.js'
+import 'express-async-errors'
 dotenv.config();
 //Middleware
 import NotFoundMiddleware from './middleware/NotFound.js';
