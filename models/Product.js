@@ -7,8 +7,8 @@ const ProductSchema = new mongoose.Schema({
     product_barcode : {
         type:String,
         required:[true, "Please provide a unique barcode for product"],
-        unique:true,
-        minlength:8,
+        unique: [true, "This product already exists"] ,
+        minlength:6,
     },
     product_name : {
         type:String,
