@@ -4,7 +4,7 @@ const ErrorHandlerMiddleware = (err, req, res, next) => {
     console.log(err)
     let statuscode = err.statusCode || 500;
     let message = err.message || "Unexpected Error Ocurred";
-    res.status(statuscode).json(message);
+    res.status(statuscode).json({err:message});
 }
 
 export default ErrorHandlerMiddleware;
