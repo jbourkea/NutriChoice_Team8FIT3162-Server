@@ -1,10 +1,11 @@
 import express from 'express'
-import {register} from '../controllers/userController.js'
+import {register, loginUser} from '../controllers/userController.js'
 
 // Define the router
 const userRouter = express.Router();
 
 // Create routes and attach methods and controller actions
-userRouter.route('/').post(register);
+userRouter.route('/register').post(register);
+userRouter.route('/login').post(loginUser);
 
 export default userRouter

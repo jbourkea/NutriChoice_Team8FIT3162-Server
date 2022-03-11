@@ -2,6 +2,7 @@ import User from '../models/User.js'
 import { BadRequestError } from '../errors/index.js'
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
 
 const register = async (req, res) => {
     const {email, password, displayName} = req.body;
@@ -43,9 +44,40 @@ const register = async (req, res) => {
     const savedUser = await newUser.save();
 
     return res.status(201).json({email, displayName});
+}
 
+const loginUser = async (req, res) => {
+    const {email, password} = req.body;
+
+    // Check if both fields exist
+    if (!email || !password){
+        throw new BadRequestError('Please provide all fields');
+    }
+
+    //Find user with provided email + check if account exists
+    const userAccount = await User.findOne({email}).select('+password');
+    if(!userAccount){
+        throw new BadRequestError('No account is associated with this email');
+    }
+
+    // Check if the hashed password matches provided password
+    const correctPassword = await bcrypt.compare(password, userAccount.password);
+    if(!correctPassword){
+        throw new BadRequestError('Invalid Login Credentials');
+    }
+
+    // Login successful, create JWT
+    const token = jwt.sign({id:userAccount._id}, process.env.JWT_SECRET);
+    res.status(200).json({
+        token,
+        user : {
+            email:userAccount.email,
+            displayName:userAccount.displayName
+        }
+    });
+    
 
 }
 
 
-export {register}
+export {register, loginUser}
