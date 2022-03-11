@@ -4,6 +4,13 @@ import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 
+/*
+register
+API Controller for registering a user
+Input in body:
+    {email, password, displayName}
+Returns email and display name of newly created user - {email, displayName}
+*/
 const register = async (req, res) => {
     const {email, password, displayName} = req.body;
     let minPassLength = 8;
@@ -46,6 +53,20 @@ const register = async (req, res) => {
     return res.status(201).json({email, displayName});
 }
 
+/*
+loginUser
+API Controller for logging in user and returning token
+Input in body:
+    {email, password}
+Returns:
+{
+    token : jwt for the user logging in,
+    user : {
+        email : users' email address,
+        displayName : users' display name
+    }
+}
+*/
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
 
