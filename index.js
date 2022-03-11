@@ -9,6 +9,7 @@ import NotFoundMiddleware from './middleware/NotFound.js';
 import ErrorHandlerMiddleware from './middleware/ErrorHandler.js'
 // Routers
 import productRouter from './routes/productRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 // Server initialization
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Routers
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/users', userRouter);
 
 // Middleware
 app.use(NotFoundMiddleware);

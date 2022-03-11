@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 const UserSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     email : {
-        type, String,
+        type: String,
         required : [true, "Please provide an email address"],
         minlength : 3,
         maxlength : 30,

@@ -1,6 +1,7 @@
 import User from '../models/User.js'
-import { BadRequestError } from '../errors'
+import { BadRequestError } from '../errors/index.js'
 import bcrypt from 'bcryptjs'
+import mongoose from 'mongoose'
 
 const register = async (req, res) => {
     const {email, password, displayName} = req.body;
@@ -18,7 +19,7 @@ const register = async (req, res) => {
 
     // Check if email is in use by another user
     const existingEmail = await User.findOne({email});
-    if(existingUser){
+    if(existingEmail){
         throw new BadRequestError('This email is already in use')
     }
 
@@ -34,6 +35,7 @@ const register = async (req, res) => {
 
     //Create the new user
     const newUser = new User({
+        _id : new mongoose.Types.ObjectId(),
         email,
         password:hashedPassword,
         displayName
@@ -44,3 +46,6 @@ const register = async (req, res) => {
 
 
 }
+
+
+export {register}
