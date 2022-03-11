@@ -40,31 +40,31 @@ const ProductSchema = new mongoose.Schema({
     },
     energykj_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide energy value"]
+        min:0
     },
     protein_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide protein value"]
+        min:0
     },
     carbohydrates_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide carbohydrate value"]
+        min:0
     },
     sugars_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide sugar value"]
+        min:0
     },
     fat_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide fat value"]
+        min:0
     },
     saturatedfat_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide saturated fat value"]
+        min:0
     },
     sodium_100g : {
         type : mongoose.Types.Decimal128,
-        required : [true, "Please provide sodium value"]
+        min:0
     },
     // TODO: Add additional non-required macros    
 })
