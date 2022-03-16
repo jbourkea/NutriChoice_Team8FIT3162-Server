@@ -1,5 +1,15 @@
 import mongoose from 'mongoose'
 
+// Helper function for returning Decimal128 format
+function getFormatedDecimal(value){
+    let returnValue = value;
+    if(value || value.$numberDecimal){
+        returnValue = parseFloat(value.toString());
+    }
+    return returnValue;
+}
+
+
 // Product Schema to be made into model
 // TODO: Find appropriate solution to image uploads to the document
 const ProductSchema = new mongoose.Schema({
@@ -14,7 +24,7 @@ const ProductSchema = new mongoose.Schema({
         type:String,
         required:[true, "Please provide a name for the product"],
         minlength:5,
-        maxlength:35,
+        maxlength:50,
         default:'Undefined Product',
     },
     product_img : {
@@ -36,41 +46,51 @@ const ProductSchema = new mongoose.Schema({
     }],
     product_servingsize : {
         type: mongoose.Types.Decimal128,
-        required : [true, "Please provide a serving size"]
+        required : [true, "Please provide a serving size"],
+        get : getFormatedDecimal
     },
     product_weight : {
         type: mongoose.Types.Decimal128,
-        required : [true, "Please provide a net weight"]
+        required : [true, "Please provide a net weight"],
+        get : getFormatedDecimal
     },
     energykj_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     protein_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     carbohydrates_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     sugars_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     fat_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     saturatedfat_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     sodium_100g : {
         type : mongoose.Types.Decimal128,
-        min:0
+        min:0,
+        get : getFormatedDecimal
     },
     // TODO: Add additional non-required macros    
-})
+}, { toJSON: { getters: true } })
+
 
 export default mongoose.model('product', ProductSchema);
