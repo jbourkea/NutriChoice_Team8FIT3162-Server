@@ -14,7 +14,7 @@ Returns the newly created object
 const createProduct = async (req, res) => {
     //TODO: Handle images being sent and store
     console.log(req.body);
-    const {barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium } = req.body;
+    const {barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image, ingredientimage } = req.body;
 
     //Check if any required fields are missing from the body
     if (!barcode || !name || !category || !servingsize || !weight || !energy || !protein || !carbohydrate || !sugar || !fat || !saturatedfat || !sodium ){
@@ -41,6 +41,8 @@ const createProduct = async (req, res) => {
         fat_100g : fat,
         saturatedfat_100g : saturatedfat,
         sodium_100g : sodium,
+        product_img : image,
+        product_ingredients_img : ingredientimage
     });
 
     return res.status(201).json({barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium });

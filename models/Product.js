@@ -17,7 +17,9 @@ const ProductSchema = new mongoose.Schema({
         maxlength:35,
         default:'Undefined Product',
     },
-    // TODO: Include image of product
+    product_img : {
+        type: Buffer
+    },
     product_datecreated : {
         type : Date,
         default : Date.now,
@@ -26,7 +28,9 @@ const ProductSchema = new mongoose.Schema({
         type:String,
         required: [true, "Please provide a category for this product"],   
     },
-    // TODO: Include image of ingredients
+    product_ingredients_img : {
+        type: Buffer
+    },
     product_ingredients : [{
         type:String
     }],
