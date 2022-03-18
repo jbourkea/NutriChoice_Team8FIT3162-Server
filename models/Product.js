@@ -28,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
         default:'Undefined Product',
     },
     product_img : {
-        type: Buffer
+        type: String
     },
     product_datecreated : {
         type : Date,
@@ -39,7 +39,7 @@ const ProductSchema = new mongoose.Schema({
         required: [true, "Please provide a category for this product"],   
     },
     product_ingredients_img : {
-        type: Buffer
+        type: String
     },
     product_ingredients : [{
         type:String
