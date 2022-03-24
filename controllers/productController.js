@@ -45,7 +45,7 @@ const createProduct = async (req, res) => {
         product_ingredients_img : ingredientimage
     });
 
-    return res.status(201).json({barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium });
+    return res.status(201).json({barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image:newProduct.product_img, ingredientimage:newProduct.product_ingredients_img });
 
 }
 
