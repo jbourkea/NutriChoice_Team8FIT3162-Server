@@ -27,6 +27,10 @@ const ProductSchema = new mongoose.Schema({
         maxlength:50,
         default:'Undefined Product',
     },
+    product_unit : {
+        type:String,
+        default: 'g'
+    },
     product_img : {
         type: String
     },
