@@ -100,5 +100,43 @@ const loginUser = async (req, res) => {
 
 }
 
+const updateUser = async (req, res) => {
+    const {displayName, password, accountRole} = req.body;
 
-export {register, loginUser}
+    const targetUser = await User.findOne({_id:req.userid});
+    if(!targetUser){
+        throw new BadRequestError("No user was found")
+    }
+
+    if(displayName){
+        // Check if display name is in use by another user
+        const existingName = await User.findOne({displayName});
+        if(existingName){
+            throw new BadRequestError("This display name is taken")
+        }
+        // Update user's display name and return success message
+        targetUser.displayName = displayName;
+        await targetUser.save();
+        return res.status(200).json({msg: 'Display name was changed to ' + displayName});
+
+    } else if(password){
+        // Salt and Hash password
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Update user's password and return success message
+        targetUser.password = hashedPassword;
+        await targetUser.save();
+        return res.status(200).json({msg: "Password has been successfully changed"});
+
+    } else if(accountRole){
+        // Immediately set account to specified role
+        // TODO: Add verification on who can set these roles
+        targetUser.accountRole = accountRole;
+        await targetUser.save();
+        return res.status(200).json({msg: "Role has been successfully changed to " + "accountRole"});
+    }
+    throw new BadRequestError("Request parameters were invalid")
+}
+
+export {register, loginUser, updateUser}
