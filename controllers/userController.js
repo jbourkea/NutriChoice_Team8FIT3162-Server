@@ -139,4 +139,14 @@ const updateUser = async (req, res) => {
     throw new BadRequestError("Request parameters were invalid")
 }
 
-export {register, loginUser, updateUser}
+const getUserProducts = async (req, res) => {
+    const targetUser = await User.findOne({_id:req.userid});
+    if(!targetUser){
+        throw new BadRequestError('No User Found');
+    }
+
+    await targetUser.populate('subProducts');
+    return res.status(200).json(targetUser.subProducts);
+}
+
+export {register, loginUser, updateUser, getUserProducts}
