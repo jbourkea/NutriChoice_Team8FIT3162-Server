@@ -12,8 +12,6 @@ Returns the newly created object
 
 */
 const createProduct = async (req, res) => {
-    //TODO: Handle images being sent and store
-    console.log(req.body);
     const {barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image, ingredientimage, unit } = req.body;
 
     //Check if any required fields are missing from the body
@@ -31,7 +29,7 @@ const createProduct = async (req, res) => {
         _id : new mongoose.Types.ObjectId(),
         product_barcode : barcode,
         product_name : name,
-        product_category : category,
+        product_category : category.toUpperCase(),
         product_servingsize : servingsize,
         product_weight : weight,
         energykj_100g : energy,
@@ -46,7 +44,7 @@ const createProduct = async (req, res) => {
         product_unit : unit
     });
 
-    return res.status(201).json({barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image:newProduct.product_img, ingredientimage:newProduct.product_ingredients_img,unit:newProduct.product_unit });
+    return res.status(201).json({barcode, name, category:newProduct.product_category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image:newProduct.product_img, ingredientimage:newProduct.product_ingredients_img,unit:newProduct.product_unit });
 
 }
 
