@@ -88,6 +88,18 @@ const getSingleProduct = async (req, res, next) => {
     return res.status(200).json(product);
 }
 
+const getProductsByCategory = async (req, res) => {
+    if(!req.body.category){
+        throw new BadRequestError("Please provide a category")
+    }
+    // Get the target product to find alternatives for
+    const products = await Product.find({product_category : {$regex : new RegExp(req.body.category, 'i')}});
+    if(!products){
+        throw new NotFoundError("This product does not exist");
+    }
+    return res.status(200).json(products);
+}
+
 // Pass in a barcode and query strings
 const getAlternatives = async (req, res, next) => {
     if(!req.body.field || !req.body.sort){
@@ -132,5 +144,5 @@ const getAlternatives = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
 
-export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives}
+export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives, getProductsByCategory}
 
