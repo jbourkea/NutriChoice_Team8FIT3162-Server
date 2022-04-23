@@ -88,7 +88,49 @@ const getSingleProduct = async (req, res, next) => {
     return res.status(200).json(product);
 }
 
+// Pass in a barcode and query strings
+const getAlternatives = async (req, res, next) => {
+    if(!req.body.field || !req.body.sort){
+        throw new BadRequestError("Field or Sort are missing from request");
+    }
+    // Get the target product to find alternatives for
+    const product = await Product.findOne({product_barcode : String(req.params.barcode)});
+    if(!product){
+        throw new NotFoundError("This product does not exist");
+    }
+    // Target correct product field
+    let field = 'product_name'
+    let sortOrder = req.body.sort;
+    if(req.body.field == "energy"){
+        field = 'energykj_100g'
+    }else if (req.body.field == 'protein'){
+        field = 'protein_100g'
+    }else if (req.body.field == 'carb'){
+        field = 'carbohydrates_100g'
+    }else if (req.body.field == 'sugar'){
+        field = 'sugars_100g'
+    }else if (req.body.field == 'fat'){
+        field = 'fat_100g'
+    }else if (req.body.field == 'satfat'){
+        field = 'saturatedfat_100g'
+    }else if (req.body.field == 'sodium'){
+        field = 'sodium_100g'
+    }
+
+    let sortParam = {};
+    sortParam[field] = sortOrder;
+
+    const query = Product.find({product_barcode :{$ne : product.product_barcode}, product_category: {$regex : new RegExp(product.product_category, 'i')}})
+                            .sort(sortParam)
+                            .limit(3);
+    
+    query.exec((err, alts) => {
+       if (err) throw err;
+       return res.json({"alternatives" : alts});
+   });
+}
+
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
 
-export {createProduct, deleteProduct, getSingleProduct, updateProduct}
+export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives}
 
