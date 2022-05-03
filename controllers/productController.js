@@ -21,7 +21,11 @@ const createProduct = async (req, res) => {
     // Check if the barcode already exists in the database 
     const existingProduct = await Product.findOne({product_barcode : barcode});
     if (existingProduct){
-        throw new ConflictError("Product already exists");
+        if(!isItemExpired(existingProduct.product_datecreated)){
+            throw new ConflictError("Product already exists");
+        } else {
+            await Product.deleteOne({product_barcode:existingProduct.product_barcode});
+        }
     }
 
     // Create the product
@@ -81,6 +85,7 @@ Returns the target product
 const getSingleProduct = async (req, res, next) => {
     const target = req.params.barcode;
     const product = await Product.findOne({product_barcode : String(target)}).exec();
+
     if(!product){
         throw new NotFoundError("This product does not exist");
     }
@@ -139,6 +144,16 @@ const getAlternatives = async (req, res, next) => {
        if (err) throw err;
        return res.json({"alternatives" : alts});
    });
+}
+
+const isItemExpired = createdDate => {
+    const now = new Date(Date.now());
+    let months = (now.getFullYear() - createdDate.getFullYear()) * 12;
+    months += now.getMonth() - createdDate.getMonth();
+    if(months >= 6){
+        return true
+    }
+    return false
 }
 
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
