@@ -6,16 +6,16 @@ import mongoose from "mongoose";
 createProduct
 API Controller for creating a product
 Input in body:
-    {barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium}
+    {barcode, name, category, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, ocr}
 
 Returns the newly created object
 
 */
 const createProduct = async (req, res) => {
-    const {barcode, name, category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image, ingredientimage, unit } = req.body;
+    const {barcode, name, category, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image, ingredientimage, unit, ocr } = req.body;
 
     //Check if any required fields are missing from the body
-    if (!barcode || !name || !category || !servingsize || !weight || !energy || !protein || !carbohydrate || !sugar || !fat || !saturatedfat || !sodium ){
+    if (!barcode || !name || !category || !energy || !protein || !carbohydrate || !sugar || !fat || !saturatedfat || !sodium ){
         throw new BadRequestError("Please ensure all fields are provided.")
     }
     // Check if the barcode already exists in the database 
@@ -30,8 +30,6 @@ const createProduct = async (req, res) => {
         product_barcode : barcode,
         product_name : name,
         product_category : category.toUpperCase(),
-        product_servingsize : servingsize,
-        product_weight : weight,
         energykj_100g : energy,
         protein_100g : protein,
         carbohydrates_100g : carbohydrate,
@@ -41,10 +39,11 @@ const createProduct = async (req, res) => {
         sodium_100g : sodium,
         product_img : image,
         product_ingredients_img : ingredientimage,
-        product_unit : unit
+        product_unit : unit,
+        product_ocr : ocr
     });
 
-    return res.status(201).json({barcode, name, category:newProduct.product_category, servingsize, weight, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image:newProduct.product_img, ingredientimage:newProduct.product_ingredients_img,unit:newProduct.product_unit });
+    return res.status(201).json({barcode, name, category:newProduct.product_category, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image:newProduct.product_img, ingredientimage:newProduct.product_ingredients_img,unit:newProduct.product_unit, ocr:newProduct.product_ocr });
 
 }
 

@@ -9,7 +9,10 @@ function getFormatedDecimal(value){
     return returnValue;
 }
 
+// // Create a Sub Schema to save 2d String Array
+// const stringArray = new mongoose.Schema({
 
+// })
 // Product Schema to be made into model
 // TODO: Find appropriate solution to image uploads to the document
 const ProductSchema = new mongoose.Schema({
@@ -45,19 +48,10 @@ const ProductSchema = new mongoose.Schema({
     product_ingredients_img : {
         type: String
     },
-    product_ingredients : [{
-        type:String
-    }],
-    product_servingsize : {
-        type: mongoose.Types.Decimal128,
-        required : [true, "Please provide a serving size"],
-        get : getFormatedDecimal
-    },
-    product_weight : {
-        type: mongoose.Types.Decimal128,
-        required : [true, "Please provide a net weight"],
-        get : getFormatedDecimal
-    },
+    product_ocr : [{
+        type: mongoose.Schema.Types.Mixed
+    }]
+    ,
     energykj_100g : {
         type : mongoose.Types.Decimal128,
         min:0,
