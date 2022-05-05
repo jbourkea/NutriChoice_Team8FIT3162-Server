@@ -35,7 +35,7 @@ const ProductSchema = new mongoose.Schema({
         default: 'g'
     },
     product_img : {
-        type: mongoose.Schema.Types.Mixed
+        type: String
     },
     product_datecreated : {
         type : Date,
