@@ -13,9 +13,9 @@ Returns the newly created object
 */
 const createProduct = async (req, res) => {
     const {barcode, name, category, energy, protein, carbohydrate, sugar, fat, saturatedfat, sodium, image, ingredientimage, unit, ocr } = req.body;
-
+    console.log(req.body);
     //Check if any required fields are missing from the body
-    if (!barcode || !name || !category || !energy || !protein || !carbohydrate || !sugar || !fat || !saturatedfat || !sodium ){
+    if (!barcode || !name || !category || energy < 0 || protein < 0 || carbohydrate < 0 || sugar < 0 || fat < 0 || saturatedfat < 0 || sodium < 0 ){
         throw new BadRequestError("Please ensure all fields are provided.")
     }
     // Check if the barcode already exists in the database 
