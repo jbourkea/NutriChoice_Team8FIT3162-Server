@@ -16,7 +16,7 @@ import { urlencoded } from 'express';
 const app = express();
 const port = process.env.PORT || 8008;
 app.use(express.json({limit:'32mb'}));
-app.use(urlencoded({limit:'32mb'}));
+app.use(express.urlencoded({limit:'32mb'}));
 
 // Routers
 app.use('/api/v1/products', productRouter);
