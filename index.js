@@ -10,11 +10,13 @@ import ErrorHandlerMiddleware from './middleware/ErrorHandler.js'
 // Routers
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import { urlencoded } from 'express';
 
 // Server initialization
 const app = express();
 const port = process.env.PORT || 8008;
-app.use(express.json());
+app.use(express.json({limit:'32mb'}));
+app.use(urlencoded({limit:'32mb'}));
 
 // Routers
 app.use('/api/v1/products', productRouter);
