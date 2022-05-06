@@ -98,10 +98,13 @@ const getProductsByCategory = async (req, res) => {
     }
     // Get the target product to find alternatives for
     const products = await Product.find({product_category : {$regex : new RegExp(req.body.category, 'i')}});
-    if(!products){
-        throw new NotFoundError("This product does not exist");
-    }
     return res.status(200).json(products);
+}
+
+const searchProductsByQuery = async (req, res) => {
+    let query = req.body.query || "";
+    let products = await Product.find({product_name : {$regex : new RegExp(query, 'i')}});
+    return res.status(200).json({results:products});
 }
 
 // Pass in a barcode and query strings
@@ -158,5 +161,5 @@ const isItemExpired = createdDate => {
 
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
 
-export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives, getProductsByCategory}
+export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives, getProductsByCategory, searchProductsByQuery}
 
