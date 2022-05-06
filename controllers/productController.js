@@ -93,11 +93,8 @@ const getSingleProduct = async (req, res, next) => {
 }
 
 const getProductsByCategory = async (req, res) => {
-    if(!req.body.category){
-        throw new BadRequestError("Please provide a category")
-    }
     // Get the target product to find alternatives for
-    const products = await Product.find({product_category : {$regex : new RegExp(req.body.category, 'i')}});
+    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}});
     return res.status(200).json(products);
 }
 
