@@ -102,7 +102,7 @@ const getProductsByCategory = async (req, res) => {
 }
 
 const searchProductsByQuery = async (req, res) => {
-    let query = req.body.query || "";
+    let query = req.params.query || "";
     let products = await Product.find({product_name : {$regex : new RegExp(query, 'i')}});
     return res.status(200).json({results:products});
 }

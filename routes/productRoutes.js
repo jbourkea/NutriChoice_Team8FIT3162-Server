@@ -6,7 +6,7 @@ const productRouter = express.Router();
 
 // Create routes and attach methods and controller actions
 productRouter.route('/').post(createProduct);
-productRouter.route('/search').post(searchProductsByQuery);
+productRouter.route('/search/:query').get(searchProductsByQuery);
 productRouter.route('/category').post(getProductsByCategory);
 productRouter.route('/:barcode').get(getSingleProduct).delete(deleteProduct).patch(updateProduct);
 productRouter.route('/:barcode/alt').post(getAlternatives);
