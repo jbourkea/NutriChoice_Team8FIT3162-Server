@@ -1,5 +1,5 @@
 import express from 'express'
-import { getSingleProduct, createProduct, deleteProduct, updateProduct, getAlternatives, getProductsByCategory, searchProductsByQuery } from "../controllers/productController.js";
+import { getSingleProduct, createProduct, deleteProduct, updateProduct, getAlternatives, getProductsByCategory, searchProductsByQuery, getProductsByCategorySimple } from "../controllers/productController.js";
 
 // Define the Router object
 const productRouter = express.Router();
@@ -8,6 +8,7 @@ const productRouter = express.Router();
 productRouter.route('/').post(createProduct);
 productRouter.route('/search/:query').get(searchProductsByQuery);
 productRouter.route('/category/:category').get(getProductsByCategory);
+productRouter.route('/simplecategory/:category').get(getProductsByCategorySimple);
 productRouter.route('/:barcode').get(getSingleProduct).delete(deleteProduct).patch(updateProduct);
 productRouter.route('/:barcode/alt').post(getAlternatives);
 

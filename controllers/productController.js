@@ -98,6 +98,12 @@ const getProductsByCategory = async (req, res) => {
     return res.status(200).json(products);
 }
 
+const getProductsByCategorySimple = async (req, res) => {
+    // Get the target product to find alternatives for
+    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}}).select({product_name:1, product_barcode:1, _id:0});
+    return res.status(200).json(products);
+}
+
 const searchProductsByQuery = async (req, res) => {
     let query = req.params.query || "";
     let products = await Product.find({product_name : {$regex : new RegExp(query, 'i')}});
@@ -158,5 +164,5 @@ const isItemExpired = createdDate => {
 
 const updateProduct = async (req, res, next) => {res.send("Update Product")}
 
-export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives, getProductsByCategory, searchProductsByQuery}
+export {createProduct, deleteProduct, getSingleProduct, updateProduct, getAlternatives, getProductsByCategory, searchProductsByQuery, getProductsByCategorySimple}
 
