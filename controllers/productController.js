@@ -94,19 +94,22 @@ const getSingleProduct = async (req, res, next) => {
 
 const getProductsByCategory = async (req, res) => {
     // Get the target product to find alternatives for
-    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}});
+    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}}).limit(5);
     return res.status(200).json(products);
 }
 
 const getProductsByCategorySimple = async (req, res) => {
     // Get the target product to find alternatives for
-    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}}).select({product_name:1, product_barcode:1, _id:0});
+    const products = await Product.find({product_category : {$regex : new RegExp(req.params.category, 'i')}})
+        .select({product_name:1, product_barcode:1, _id:0})
+        .limit(5);
     return res.status(200).json(products);
 }
 
 const searchProductsByQuery = async (req, res) => {
     let query = req.params.query || "";
-    let products = await Product.find({product_name : {$regex : new RegExp(query, 'i')}});
+    let products = await Product.find({product_name : {$regex : new RegExp(query, 'i')}})
+        .limit(8);
     return res.status(200).json({results:products});
 }
 
